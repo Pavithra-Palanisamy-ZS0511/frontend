@@ -1,0 +1,82 @@
+<div *transloco="let t">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="userActions"
+    class="profile-toggle-btn rounded-md"
+    aria-label="{{ t('userProfileMenu') }}"
+    tabindex="0"
+    aria-haspopup="true"
+  >
+    <span
+      class="relative flex items-center justify-between"
+      [class.gap-3]="!isScreenSmall"
+    >
+      <img
+        class="w-h-profile-icon rounded-full mr-2"
+        [src]="(this.user?.picture)?(this.user?.picture):(assetKeys.defaultImage)"
+        [alt]="globalMessage.avatar"
+      />
+      <span *ngIf="true"
+        class="absolute bottom-0 rounded-full bg-green-500 status-indicator"
+      ></span>
+      <ng-container *ngIf="!isScreenSmall">
+        <div class="text-left mr-5">
+          <h4 class="font-medium text-base leading-6 text-white">
+            {{ profileDetails?.first_name }} {{ profileDetails?.last_name }}
+          </h4>
+          <p class="font-normal text-sm leading-5 text-white">
+            {{ this.user?.name }}
+          </p>
+        </div>
+      </ng-container>
+      <span>
+        <i class="fa-solid fa-chevron-down chevron-down-icon text-white"></i>
+      </span>
+    </span>
+  </button>
+
+  <mat-menu
+    [xPosition]="'before'"
+    #userActions="matMenu"
+    class="toggle-card md-hidden md:rounded-bl-lg md:rounded-br-lg"
+  >
+    <button
+      mat-menu-item
+      class="toggle-nav-menu w-full pr-0 pl-0 focus:outline-none appearance-none"
+      [routerLink]="['/account']"
+      aria-label="{{ t('myProfile') }}"
+    >
+      <i
+        class="fa-regular fa-user mr-3 text-lg ml-1 wh-16 text-secondary-color"
+        aria-hidden="true"
+      ></i>
+      <span class="text-lg ml-5px">{{ t("myProfile") }}</span>
+    </button>
+    <button
+      mat-menu-item
+      class="toggle-nav-menu w-full pr-0 pl-0 focus:outline-none appearance-none"
+      [routerLink]="['/']"
+      aria-label="{{ t('backToParticipantCentre') }}"
+    >
+      <mat-icon
+        [svgIcon]="'feather:fa-pro-turn-left'"
+        class="text-lg wh-16"
+        aria-hidden="true"
+      ></mat-icon>
+      <span class="text-lg">{{ t("backToParticipantCentre") }}</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="logOut()"
+      aria-label="{{ t('logOut') }}"
+      class="toggle-nav-menu w-full pr-0 pl-0 focus:outline-none appearance-none"
+    >
+      <mat-icon
+        [svgIcon]="'feather:fa-pro-logout'"
+        class="text-lg wh-16"
+        aria-hidden="true"
+      ></mat-icon>
+      <span class="text-lg text-danger-color">{{ t("logOut") }}</span>
+    </button>
+  </mat-menu>
+</div>

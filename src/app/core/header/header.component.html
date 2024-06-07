@@ -1,0 +1,54 @@
+<div *transloco="let t">
+  <div
+    class="relative flex flex-auto justify-center items-center w-full px-4 md:px-8 header-wrapper"
+    role="navigation"
+    [aria-label]="t('mainNavigation')"
+    
+  >
+    <div class="flex items-center w-full max-w-360 h-16 sm:h-20">
+      <ng-container>
+        <div class="flex items-center">
+          <a [routerLink]="'/'" class="cursor-pointer">
+            <img
+              class="w-full"
+              [src]="
+                isScreenSmall ? assetKeys.pmcfMobileLogo : assetKeys.pmcfLogo
+              "
+              [alt]="t('pmcfLogo')"
+            />
+          </a>
+        </div>
+      </ng-container>
+      <div
+        class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2 space-evenly"
+      >
+        <a
+          [routerLink]="'/my-giving'"
+          class="mr-5 xs-mr-3"
+          [attr.aria-label]="t('myGivings')"
+          tabindex="0"
+          [attr.aria-current]="isActive('/my-giving') ? 'page' : null"
+        >
+          <span
+            class="text-custom-md text-custom-sm text-white font-medium"
+            [ngStyle]="{ opacity: isActive('/my-giving') ? '1' : '0.8' }"
+            >{{ t("myGivings") }}</span
+          >
+        </a>
+        <a [routerLink]="'/events'" [attr.aria-label]="t('events')">
+          <span
+            class="text-custom-md text-custom-sm text-white font-medium"
+            [ngStyle]="{ opacity: isActive('/events') ? '1' : '0.8' }"
+            >{{ t("events") }}</span
+          >
+        </a>
+      </div>
+      <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        <ng-container *ngIf="false">
+          <languages></languages>
+        </ng-container>
+        <user></user>
+      </div>
+    </div>
+  </div>
+</div>

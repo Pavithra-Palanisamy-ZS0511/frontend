@@ -1,0 +1,108 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Main Tailwind file for injecting utilities.
+/* ----------------------------------------------------------------------------------------------------- */
+@tailwind utilities;
+
+@import './partials/base';
+
+body {
+  font-feature-settings: normal;
+}
+
+.bg-primary-500 {
+  background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-dark-color {
+  color: var(--text-dark-color);
+}
+
+.alert-text-color {
+  color: var(--alert-text-color) !important;
+}
+
+.text-secondary-color {
+  color: var(--text-secondary) !important;
+}
+
+.bg-sky-color {
+  background-color: var(--bg-sky-color);
+}
+
+.bg-violet-color {
+  background-color: var(--bg-violet-color);
+}
+
+.bg-vivid-pink-color {
+  background-color: var(--bg-vivid-pink-color);
+}
+
+.bg-secondary-500 {
+  background-color: var(--bg-secondary-color);
+}
+
+.mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+  background-image: url("/assets/icons/angle-down.svg") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+}
+
+.mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow svg {
+  display: none;
+}
+
+.mat-mdc-progress-bar,
+  .theme-default.light .mat-mdc-progress-bar {
+    --mdc-linear-progress-active-indicator-color: #e09034;
+  }
+  
+  .mat-mdc-tooltip .mdc-tooltip__surface {
+    background-color: #1e293b !important;
+    color: var(--white-color) !important;
+  }
+  
+  .mat-icon.upsquare-icon {
+    min-height: 1.625rem;
+    min-width: 0.938rem;
+    width: 0.75rem;
+    height: 0.668rem;
+    gap: 0px;
+    opacity: 0px;
+  }
+
+  .text-blue-color {
+    color: rgba(0, 45, 114, 1);
+  }
+  .text-dark-color {
+    color: #1f2a37;
+  }
+  .mdc-button.more-info-button {
+    width: 6rem;
+    height: 2.5rem;
+    gap: 0.5rem;
+    opacity: 0rem;
+    background-color: #002d72;
+    color: #ffffff !important;
+  }
+  .mdc-button.donate-button {
+    width: 5.063rem;
+    height: 2.5rem;
+    gap: 0.5rem;
+    opacity: 0rem;
+    background-color: #ebeefe;
+    color: #002d72 !important;
+  }
+
+  .million-text{
+    color: #6DD2FD;
+  }
+
+  .text-green-600 {
+    color: var(--text-green-color);
+  }

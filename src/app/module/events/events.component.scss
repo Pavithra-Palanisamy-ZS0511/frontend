@@ -1,0 +1,63 @@
+.events-layout {
+    background-color: #f9fafb;
+  }
+  
+  
+  
+  .photo-resolution {
+    width: 16.25rem !important;
+    height: 16.25rem !important;
+  }
+  .event-name {
+    height: 9.625rem !important;
+  }
+  .arrow-icon {
+    vertical-align: middle;
+  }
+  
+  .filter-shopping {
+    border: 1px solid #ced4da;
+    margin-bottom: 1.5rem;
+  }
+  .manage-button {
+    border: 1px solid #dfe4ea;
+    color: #1f2a37;
+  }
+  
+  .noevents {
+    height: 29.375rem;
+  }
+  .noevents-cards {
+    height: 23.375rem;
+  }
+  .upcomingeventssuggestion {
+    font-size: 0.875rem;
+  }
+  .border-color {
+    background-color: #6dd2fd;
+  }
+  .mdc-button.more-info-button {
+    width: 96px;
+    height: 40px;
+    gap: 8px;
+    opacity: 0px;
+    background-color: #002d72;
+    color: #ffffff !important;
+  }
+  .mdc-button.donate-button {
+    width: 81px;
+    height: 40px;
+    gap: 8px;
+    opacity: 0px;
+    background-color: #ebeefe;
+    color: #002d72 !important;
+  }
+  fuse-card.noevents-suggestion {
+    box-shadow: unset !important;
+  }
+  
+  .mat-accordion .mat-expansion-panel.mat-expanded,
+  .mat-accordion .mat-expansion-panel:hover {
+    box-shadow: unset !important;
+  }
+  

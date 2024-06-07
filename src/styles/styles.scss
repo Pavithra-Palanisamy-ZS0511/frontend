@@ -1,0 +1,52 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+@import './partials/base';
+
+// customize fuse alert info
+fuse-alert.fuse-alert-appearance-outline.fuse-alert-type-info .fuse-alert-container {
+  background-color: #e9f9ff !important;
+  --tw-ring-color: #0b76b7 !important;
+}
+
+div.mat-mdc-select-panel {
+  background-color: var(--white-color) !important;
+}
+
+.mat-mdc-form-field-flex {
+  border: 1px solid var(--border-hr);
+}
+
+.mat-mdc-form-field.mat-form-field-appearance-fill.mat-form-field-disabled {
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+.mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mat-mdc-floating-label {
+  top: -30px !important;
+}
+
+.mat-mdc-form-field-error {
+  color: var(--text-red-color) !important;
+}
+
+.mdc-floating-label--required:not(.mdc-floating-label--hide-required-marker)::after {
+  display: none !important;
+}
+
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: var(--white-color);
+  --mdc-snackbar-supporting-text-color: var(--white-color);
+
+  &.app-notification-error {
+    --mdc-snackbar-container-color: #f23a2f !important;
+  }
+
+  &.app-notification-success {
+    --mdc-snackbar-container-color: #43a446 !important;
+  }
+}

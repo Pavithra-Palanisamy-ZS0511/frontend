@@ -1,0 +1,256 @@
+<div *transloco="let t">
+  <div class="w-full" role="form" aria-labelledby="{{ t('securityLabel') }}">
+    <div class="w-full">
+      <h2 id="{{ t('securityLabel') }}" class="text-dark-color mt-0">
+        {{ t("accountSecurityDescription") }}
+      </h2>
+      <div class="sm:col-span-3 mt-5 mb-5">
+        <fuse-alert [appearance]="'outline'" [type]="'info'" [showIcon]="false">
+          <div class="flex items-center">
+            <mat-icon
+              [svgIcon]="'feather:fa-pro-outline-info'"
+              class="pt-1"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="ml-2 font-normal alert-text-color">
+              {{ t("accountSecurityInfoAlert") }}
+            </span>
+          </div>
+        </fuse-alert>
+      </div>
+    </div>
+    <div
+      class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto overflow-hidden mt-2"
+    >
+      <div class="flex flex-row justify-between items-center">
+        <div class="text-xl font-bold tracking-tight leading-7 truncate mt-4">
+          {{ t("loginEmailAddress") }}
+        </div>
+        <div class="flex flex-row items-center gap-x-1">
+          <mat-icon
+            [svgIcon]="'feather:fa-pro-regular-circle-check'"
+            class="text-green-600 text-base wh-20"
+            role="img"
+            aria-hidden="true"
+          ></mat-icon>
+          <span class="text-base font-medium"> {{ t("verified") }}</span>
+        </div>
+      </div>
+
+      <form [formGroup]="updateLoginEmailForm" *ngIf="showEmailUpdateForm">
+        <div class="grid sm:grid-cols-2 items-center gap-6 w-full mt-2">
+          <div class="sm:col-span-1">
+            <mat-form-field class="w-full">
+              <mat-label class="sr-only" for="loginEmail">{{
+                t('emailInputLabel')
+              }}</mat-label>
+              <input
+                formControlName="email"
+                matInput
+                id="loginEmail"
+                aria-required="true"
+                aria-invalid="{{ updateLoginEmailForm.get('email').invalid }}"
+              />
+              <mat-icon
+                matSuffix
+                class="text-green-600"
+                role="img"
+                aria-hidden="true"
+                aria-label="{{ t('emailUpdatedSuccessfully') }}"
+                *ngIf="showLoginEmailDone"
+                >done</mat-icon
+              >
+              <mat-error
+                *ngIf="updateLoginEmailForm.get('email').hasError('required')"
+              >
+                {{ t("emailRequiredError") }}
+              </mat-error>
+              <mat-error
+                *ngIf="updateLoginEmailForm.get('email').hasError('email')"
+              >
+                {{ t("emailInvalidError") }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-1">
+            <button
+              class="w-full bg-primary-500 text-white py-3 px-4 rounded-full"
+              type="button"
+              aria-label="{{ t('updateLoginEmail') }}"
+              (click)="onUpdateLoginEmailButton()"
+              (keydown.enter)="onUpdateLoginEmailButton()"
+            >
+              {{ t("updateLoginEmail") }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="showConfirmEmailUpdateForm">
+        <div
+          class="flex flex-col mt-6 p-6 bg-white border rounded-2xl shadow overflow-hidden"
+          aria-live="polite"
+        >
+          <div
+            class="grid grid-cols-1 lg:grid-cols-3 grid-flow-row gap-6 w-full mt-6 sm:mt-3"
+          >
+            <div class="lg:col-span-2 flex flex-row flex-auto items-center">
+              <div class="w-full lg:pr-10">
+                <span>
+                  {{
+                    t("confirmEmailUpdateDescLine1") +
+                      " " +
+                      updateEmail +
+                      " " +
+                      t("confirmEmailUpdateDescLine2")
+                  }}</span
+                >
+              </div>
+              <div class="h-3/5 bg-gray-200">
+                <span class="hidden lg:block lg:col-span-1 border-l"></span>
+              </div>
+            </div>
+            <div class="lg:col-span-1 flex flex-col">
+              <div class="flex flex-col gap-3">
+                <button
+                  class="w-full font-medium bg-primary-500 text-white py-3 px-4 rounded-full"
+                  type="button"
+                  aria-label="{{ t('addRecoveryEmail') }}"
+                >
+                  {{ t("updateTo") + " " + updateEmail }}
+                </button>
+                <button
+                  class="w-full bg-secondary-500 font-medium text-primary py-3 px-4 rounded-full"
+                  type="button"
+                  aria-label="{{ t('leave') + ' ' + updateEmail }}"
+                  (click)="onLeaveRecoveryEmailButton()"
+                >
+                  {{ t("leave") + " " + updateEmail }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Divider -->
+      <div class="my-10 border-t"></div>
+      <div class="flex flex-row justify-between items-center">
+        <div class="text-xl font-bold tracking-tight leading-7 truncate">
+          {{ t("recoveryEmail") }}
+        </div>
+        <div
+          class="flex flex-row items-center gap-x-1"
+          *ngIf="showAddRecoveryForm"
+        >
+          <mat-icon
+            [svgIcon]="'feather:fa-pro-regular-circle-check'"
+            class="text-green-600 text-base wh-20"
+            role="img"
+            aria-label="{{ t('emailUpdatedSuccessfully') }}"
+            aria-hidden="true"
+          ></mat-icon>
+          <span class="text-base font-medium"> {{ t("verified") }}</span>
+        </div>
+
+        <div
+          class="font-medium text-base text-dark-color"
+          *ngIf="!showAddRecoveryForm"
+        >
+          {{ t("recoveryEmailRightDesc") }}
+        </div>
+      </div>
+
+      <form
+        [formGroup]="recoveryEmailForm"
+        *ngIf="showAddRecoveryForm"
+        aria-labelledby="{{ t('recoveryEmailFormLabel') }}"
+      >
+        <div class="sm:grid-row mt-5">
+          <div>
+            {{ t("recoveryEmailDescLine1") }}
+          </div>
+          <div>
+            {{ t("recoveryEmailDescLine2") }}
+          </div>
+          {{ t("learnMore") }}
+        </div>
+        <div class="grid sm:grid-cols-2 items-center gap-6 w-full mt-2">
+          <div class="sm:col-span-1">
+            <mat-form-field class="w-full">
+              <mat-label
+                class="sr-only"
+                for="recoveryEmail"
+                id="{{ t('recoveryEmailFormLabel') }}"
+                >{{ t("phoneInputLabel") }}</mat-label
+              >
+              <input
+                formControlName="email"
+                matInput
+                id="recoveryEmail"
+                aria-required="true"
+                aria-invalid="{{ updateLoginEmailForm.get('email').invalid }}"
+              />
+              <mat-icon
+                matSuffix
+                class="text-green-600"
+                aria-hidden="true"
+                *ngIf="showAddRecoveryDone"
+                >done</mat-icon
+              >
+              <mat-error
+                *ngIf="recoveryEmailForm.get('email').hasError('required')"
+              >
+                {{ t("emailRequiredError") }}
+              </mat-error>
+              <mat-error
+                *ngIf="recoveryEmailForm.get('email').hasError('email')"
+              >
+                {{ t("emailInvalidError") }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-1">
+            <button
+              class="w-full bg-primary-500 text-white py-3 px-4 rounded-full"
+              type="button"
+              aria-label="{{ t('updateRecoveryEmail') }}"
+              (click)="onAddRecoveryEmailButton()"
+            >
+              {{ t("updateRecoveryEmail") }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="showConfirmUpdateRecoveryForm">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-3 grid-flow-row w-full mt-6 sm:mt-3"
+          aria-live="polite"
+        >
+          <div class="lg:col-span-2 flex flex-row flex-auto items-center">
+            <div class="w-full lg:pr-10">
+              <div class="sm:grid-row mt-5">
+                <div>
+                  {{ t("recoveryEmailDescLine1") }}
+                </div>
+                <div>
+                  {{ t("recoveryEmailDescLine2") + " " + t("learnMore") }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-1 flex justify-center items-center">
+            <div class="flex flex-row gap-3 w-full">
+              <button
+                class="w-full font-medium bg-primary-500 text-white py-3 px-4 rounded-full"
+                type="button"
+                aria-label="{{ t('addRecoveryEmail') }}"
+                (click)="onConfirmAddRecoveryEmailButton()"
+              >
+                {{ t("addRecoveryEmail") }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

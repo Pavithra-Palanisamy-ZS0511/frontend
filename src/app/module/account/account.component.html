@@ -1,0 +1,145 @@
+<div
+  class="flex flex-col w-full min-w-0 sm:inset-0 sm:overflow-hidden"
+  *transloco="let t"
+>
+  <mat-drawer-container
+    class="flex-auto sm:h-full"
+    aria-label="{{ t('myProfile') }}"
+  >
+    <!-- Drawer -->
+    <mat-drawer
+      class="sm:w-96 w-348 dark:bg-gray-900 bg-white"
+      [autoFocus]="false"
+      [mode]="drawerMode"
+      [opened]="drawerOpened"
+      #drawer
+      aria-labelledby="{{ t('drawerTitleLabel') }}"
+    >
+      <!-- Header -->
+      <div
+        class="flex items-center justify-between m-8 mr-6 sm:my-10"
+        id="{{ t('drawerTitleLabel') }}"
+      >
+        <!-- Title -->
+        <div
+          class="text-3xl font-bold tracking-tight leading-none"
+          aria-label="{{ t('myProfile') }}"
+        >
+          {{ t("myProfile") }}
+        </div>
+        <!-- Close button -->
+        <div class="lg:hidden">
+          <button
+            mat-icon-button
+            (click)="drawer.close()"
+            aria-label="{{ t('closeDrawer') }}"
+          >
+            <mat-icon
+              [svgIcon]="'feather:fa-pro-regular-xmark'"
+              class="border text-secondary-color rounded-full p-2 text-lg wh-32"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="sr-only">{{ t("closeDrawer") }}</span>
+          </button>
+        </div>
+      </div>
+      <!-- Panel links -->
+      <div class="flex flex-col divide-y border-t border-b">
+        <ng-container *ngFor="let panel of panels; trackBy: trackByFn">
+          <button
+            #panelButton
+            class="flex px-8 py-5 cursor-pointer"
+            [ngClass]="{
+              'hover:bg-gray-100 dark:hover:bg-hover':
+                !selectedPanel || selectedPanel !== panel.id,
+              'bg-primary-50 dark:bg-hover':
+                selectedPanel && selectedPanel === panel.id
+            }"
+            (click)="goToPanel(panel.id)"
+            tabindex="0"
+            (keydown)="handleKeyDown($event, panel.id)"
+            (focus)="handleFocus(panel.id)"
+            (blur)="handleBlur()"
+            aria-label="{{ t(panel.id) }}"
+          >
+            <mat-icon
+              [ngClass]="{
+                'text-hint text-secondary-color':
+                  !selectedPanel || selectedPanel !== panel.id,
+                'text-primary dark:text-primary-500':
+                  selectedPanel && selectedPanel === panel.id
+              }"
+              [svgIcon]="panel.icon"
+              aria-hidden="true"
+            ></mat-icon>
+            <div class="ml-3">
+              <div
+                class="text-lg font-medium leading-6 text-dark-color"
+                [ngClass]="{
+                  'text-primary dark:text-primary-500':
+                    selectedPanel && selectedPanel === panel.id
+                }"
+              >
+                {{ t(panel.id) }}
+              </div>
+            </div>
+          </button>
+        </ng-container>
+      </div>
+    </mat-drawer>
+    <!-- Drawer content -->
+    <mat-drawer-content class="flex flex-col drawer-content-wrapper">
+      <!-- Main -->
+      <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+        <!-- Panel header -->
+        <div class="flex items-center">
+          <!-- Drawer toggle -->
+          <button
+            class="lg:hidden -ml-2"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            aria-label="{{ t('toggleDrawer') }}"
+          >
+            <i
+              class="fa-solid fa-bars border text-secondary-color rounded-full p-2 text-lg wh-32"
+            ></i>
+            <span class="sr-only" aria-hidden="true">{{
+              t("toggleDrawer")
+            }}</span>
+          </button>
+
+          <!-- Panel title -->
+          <div
+            class="ml-2 lg:ml-0 text-3xl text-2xl-md font-semibold tracking-tight leading-none"
+          >
+            {{ t(getPanelInfo(selectedPanel).id) }}
+          </div>
+        </div>
+
+        <!-- Load settings panel -->
+        <div class="mt-3" aria-live="polite">
+          <ng-container [ngSwitch]="selectedPanel">
+            <!-- Account -->
+            <ng-container *ngSwitchCase="'myProfileAccountMenu'">
+              <account-my-profile></account-my-profile>
+            </ng-container>
+            <!-- Contact Details -->
+            <ng-container *ngSwitchCase="'contactDetailsAccountMenu'">
+              <account-contact-details></account-contact-details>
+            </ng-container>
+            <!-- Security -->
+            <ng-container *ngSwitchCase="'securityAccountMenu'">
+              <account-security></account-security>
+            </ng-container>
+            <!-- Payment Method -->
+            <ng-container *ngIf="false">
+              <ng-container *ngSwitchCase="'paymentMethodAccountMenu'">
+                <account-payment-method></account-payment-method>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

@@ -1,0 +1,10 @@
+{
+  "authorizationDomain": "https://sp-authorization.int.akaraisin.com/api",
+  "campaignsDomain": "https://sp-campaigns.int.akaraisin.com/api",
+  "emailDomain": "https://sp-email.int.akaraisin.com/api",
+  "jwtDomain": "https://sp-jwt.int.akaraisin.com/api",
+  "revenueDomain": "https://sp-revenue.int.akaraisin.com/api",
+  "transactionsDomain": "https://sp-transactions.int.akaraisin.com/api",
+  "userdashboardDomain": "https://sp-userdashboard.int.akaraisin.com/api",
+  "userprofileDomain": "https://sp-userprofile.int.akaraisin.com/api"
+}

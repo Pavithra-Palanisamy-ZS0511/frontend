@@ -1,0 +1,23 @@
+
+  
+  .gif-wrapper {
+    width: 32rem;
+    height: 32rem;
+  }
+.mt-ve-7 {
+  margin-top: -7%;
+}
+
+  @media screen and (max-width: 960px) {
+    .gif-wrapper {
+      width: initial;
+      height: initial;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .xs-text-sm {
+      font-size: 12px !important;
+    }
+  }
+  
+

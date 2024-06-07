@@ -1,0 +1,367 @@
+<div *transloco="let t">
+  <div
+    class="w-full"
+    role="form"
+    aria-labelledby="{{ t('accountTitleLabel') }}"
+  >
+    <!-- Form -->
+    <form [formGroup]="accountForm">
+      <!-- Section -->
+      <div class="w-full">
+        <h2 id="{{ t('accountTitleLabel') }}" class="text-dark-color mt-0">
+          {{ t("profileDescription") }}
+        </h2>
+        <div class="sm:col-span-3 mt-5 mb-5">
+          <fuse-alert
+            [appearance]="'outline'"
+            [type]="'info'"
+            [showIcon]="false"
+          >
+            <div class="flex items-center">
+              <mat-icon
+                [svgIcon]="'feather:fa-pro-outline-info'"
+                class="pt-1"
+              ></mat-icon>
+              <span class="ml-2 font-normal alert-text-color">
+                {{ t("profileFormAlertText") }}
+              </span>
+            </div>
+          </fuse-alert>
+        </div>
+      </div>
+
+      <div class="mt-3 lg:ml-0 text-2xl font-bold tracking-tight leading-none">
+        {{ t("personalInformation") }}
+      </div>
+      <div class="w-full text-secondary-color mt-3">
+        ID: <span class="text-secondary-color">{{ profileDetails?.lookupId }}</span>
+      </div>
+
+      <div class="w-full mt-5">
+        <div class="rounded-full flex items-center">
+          <img
+            src="{{ (profileDetails?.picture)? (profileDetails?.picture): (assetKeys.defaultImage)}}"
+            alt="User avatar"
+            class="wh-80 rounded-full ring-4 ring-bg-card"
+          />
+          <div class="upload-profile-file ml-5" *ngIf="false">
+            <label for="fileInputLabel" id="fileInputLabel" class="sr-only">{{
+              t("uploadPhoto")
+            }}</label>
+            <input
+              type="file"
+              #fileInput
+              accept="image/*"
+              class="invisible sr-only"
+              aria-labelledby="fileInputLabel"
+              disabled
+            />
+            <button
+              mat-raised-button
+              (click)="fileInput.click()"
+              class="text-dark-color upload-img-btn text-sm"
+            >
+              <fa-icon
+                [icon]="faImage"
+                class="text-lg font-medium text-secondary-color mr-2"
+              ></fa-icon>
+              {{ t("uploadPhoto") }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <!-- Title -->
+        <div class="sm:col-span-4">
+          <mat-form-field class="w-full">
+            <mat-label class="text-lg" for="title">{{
+              t("profileFormLabel.title")
+            }}</mat-label>
+            <mat-select formControlName="title" id="title">
+              <mat-option *ngFor="let title of titles" [value]="title">{{
+                title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- First Name -->
+        <div class="sm:col-span-2">
+          <mat-form-field
+            class="w-full"
+            [class.mat-form-field-disabled]="isDisabled"
+          >
+            <mat-label class="text-lg" for="firstName">{{
+              t("profileFormLabel.firstName")
+            }}</mat-label>
+            <input
+              formControlName="firstName"
+              matInput
+              id="firstName"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <!-- Middle Name -->
+        <div class="sm:col-span-2">
+          <mat-form-field
+            class="w-full"
+            [class.mat-form-field-disabled]="isDisabled"
+          >
+            <mat-label class="text-lg" for="middleName"
+              >{{ t("profileFormLabel.middleName") }}
+              <span class="text-secondary-color text-lg font-medium" matSuffix
+                >({{ t("profileFormLabel.optional") }})</span
+              ></mat-label
+            >
+            <input
+              formControlName="middleName"
+              matInput
+              id="middleName"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Last Name -->
+        <div class="sm:col-span-2">
+          <mat-form-field
+            class="w-full"
+            [class.mat-form-field-disabled]="isDisabled"
+          >
+            <mat-label class="text-lg" for="lastName">{{
+              t("profileFormLabel.lastName")
+            }}</mat-label>
+            <input formControlName="lastName" matInput id="lastName" readonly />
+          </mat-form-field>
+        </div>
+        <!-- Suffix -->
+        <div class="sm:col-span-2">
+          <mat-form-field
+            class="w-full"
+            [class.mat-form-field-disabled]="isDisabled"
+          >
+            <mat-label class="text-lg" for="suffixName"
+              >{{ t("profileFormLabel.suffixName") }}
+              <span class="text-secondary-color text-lg font-medium" matSuffix
+                >({{ t("profileFormLabel.optional") }})</span
+              ></mat-label
+            >
+            <input
+              formControlName="suffixName"
+              matInput
+              id="suffixName"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Nickname -->
+        <div class="sm:col-span-4">
+          <mat-form-field
+            class="w-full"
+            [class.mat-form-field-disabled]="isDisabled"
+          >
+            <mat-label class="text-lg" for="nickName"
+              >{{ t("profileFormLabel.nickName") }}
+              <span class="text-secondary-color text-lg font-medium" matSuffix
+                >({{ t("profileFormLabel.optional") }})</span
+              ></mat-label
+            >
+            <input formControlName="nickName" matInput id="nickName" readonly />
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-container *ngIf="false">
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+          <button
+            mat-stroked-button
+            type="button"
+            class="py-3 px-4"
+            aria-label="{{ t('cancel') }}"
+            [disabled]="isDisabled"
+          >
+            {{ t("cancel") }}
+          </button>
+          <button
+            class="ml-4"
+            mat-flat-button
+            type="button"
+            aria-label="{{ t('saveChanges') }}"
+            class="ml-4 bg-primary-500 text-white py-3 px-4 rounded-full"
+            [disabled]="isDisabled"
+          >
+            {{ t("saveChanges") }}
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Divider -->
+      <div class="my-10 border-t"></div>
+
+      <!-- Section -->
+      <div class="w-full">
+        <div class="lg:ml-0 text-2xl font-bold tracking-tight leading-none">
+          {{ t("profileFormLabel.demographic") }}
+          <span class="text-secondary-color text-lg font-medium" matSuffix
+            >({{ t("profileFormLabel.allOptional") }})</span
+          >
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <!-- Marital Status -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="maritalStatus">{{
+              t("profileFormLabel.maritalStatus")
+            }}</mat-label>
+            <mat-select [formControlName]="'maritalStatus'" id="maritalStatus">
+              <mat-option
+                *ngFor="let status of maritalStatusOptions"
+                [value]="status"
+                >{{ status }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Birth date -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="birthDate">{{
+              t("profileFormLabel.birthDate")
+            }}</mat-label>
+            <mat-select [formControlName]="'birth'" id="birth">
+              <mat-option
+                *ngFor="let birth of birthDate"
+                [value]="birth"
+                >{{ birth }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Gender -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="gender">{{
+              t("profileFormLabel.gender")
+            }}</mat-label>
+            <mat-select [formControlName]="'gender'" id="gender">
+              <mat-option
+                *ngFor="let gender of genderOptions"
+                [value]="gender"
+                >{{ gender }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Ethnicity -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="ethnicity">{{
+              t("profileFormLabel.ethnicity")
+            }}</mat-label>
+            <mat-select [formControlName]="'ethnicity'" id="ethnicity">
+              <mat-option
+                *ngFor="let ethnicity of ethnicityOptions"
+                [value]="ethnicity"
+                >{{ ethnicity }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="my-10 border-t"></div>
+
+      <!-- Section -->
+      <div class="w-full">
+        <div class="lg:ml-0 text-2xl font-bold tracking-tight leading-none">
+          {{ t("tellUsMore") }}
+          <span class="text-secondary-color text-lg font-medium" matSuffix
+            >({{ t("profileFormLabel.allOptional") }})</span
+          >
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <!-- Dietary -->
+        <div class="sm:col-span-4">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="dietary">{{
+              t("profileFormLabel.dietary")
+            }}</mat-label>
+            <mat-select [formControlName]="'dietary'" id="dietary">
+              <mat-option
+                *ngFor="let dietary of dietaryOptions"
+                [value]="dietary"
+                >{{ dietary }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Interests -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="interests">{{
+              t("profileFormLabel.interests")
+            }}</mat-label>
+            <mat-select [formControlName]="'interests'" id="interests">
+              <mat-option
+                *ngFor="let interests of interestsOptions"
+                [value]="interests"
+                >{{ interests }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Accessibility -->
+        <div class="sm:col-span-2">
+          <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label class="text-lg" for="accessibility">{{
+              t("profileFormLabel.accessibility")
+            }}</mat-label>
+            <mat-select [formControlName]="'accessibility'" id="accessibility">
+              <mat-option
+                *ngFor="let accessibility of accessibilityOptions"
+                [value]="accessibility"
+                >{{ accessibility }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <ng-container *ngIf="false">
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+          <button
+            mat-stroked-button
+            class="py-3 px-4"
+            type="button"
+            aria-label="{{ t('cancel') }}"
+            [disabled]="isDisabled"
+          >
+            {{ t("cancel") }}
+          </button>
+          <button
+            class="ml-4"
+            mat-flat-button
+            type="button"
+            aria-label="{{ t('saveChanges') }}"
+            class="ml-4 bg-primary-500 text-white py-3 px-4 rounded-full"
+            [disabled]="isDisabled"
+          >
+            {{ t("saveChanges") }}
+          </button>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+</div>

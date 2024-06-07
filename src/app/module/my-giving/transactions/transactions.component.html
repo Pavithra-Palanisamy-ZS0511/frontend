@@ -1,0 +1,376 @@
+<div *transloco="let t">
+  <div
+    class="w-full"
+    aria-labelledby="{{ t('transactionContainer') }}"
+  >
+    <!-- Section -->
+
+    <div *ngIf="!isTransactionData; else notFound">
+      <div class="w-full">
+        <h2 id="{{ t('transactionContainer') }}" class="text-dark-color mt-0">
+          {{ t("transactionsDescription") }}
+        </h2>
+        <div class="sm:col-span-3 mt-5 mb-5">
+          <fuse-alert
+            [appearance]="'outline'"
+            class="white"
+            [type]="'info'"
+            [showIcon]="false"
+          >
+            <div class="flex items-center">
+              <mat-icon
+                [svgIcon]="'feather:fa-pro-outline-info'"
+                class="pt-1"
+              ></mat-icon>
+              <span class="ml-2 font-normal alert-text-color">
+                {{ t("transactionsInfoAlert") }}
+              </span>
+            </div>
+          </fuse-alert>
+        </div>
+        <div class="scroll-container overflow-x-auto">
+          <div class="flex items-center gap-x-4 sm:flex-nowrap mb-2">
+            <div class="flex-shrink-0 sm:w-auto">
+              <fuse-card
+                class="flex items-center h-5-sm w-full sm:p-3 md:p-6 lg:p-6 filter-info bg-white"
+              >
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-xl bg-sky-color"
+                >
+                  <mat-icon
+                    class="text-current text-white"
+                    [svgIcon]="'feather:fa-pro-regular-calendars'"
+                  ></mat-icon>
+                </div>
+                <div class="flex flex-col ml-4">
+                  <div
+                    class="text-base text-secondary-color font-medium leading-6"
+                  >
+                    {{ t("ytdGiving") }}
+                  </div>
+                  <div class="text-lg text-dark-color font-bold">
+                    ${{ ytdGiving }}
+                  </div>
+                </div>
+              </fuse-card>
+            </div>
+            <div class="flex-shrink-0 sm:w-auto">
+              <fuse-card
+                class="flex items-center h-5-sm w-full sm:p-3 md:p-6 lg:p-6 filter-info bg-white"
+              >
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-xl bg-violet-color"
+                >
+                  <mat-icon
+                    class="text-current text-white"
+                    [svgIcon]="
+                      'feather:fa-pro-regular-hand-holding-circle-dollar'
+                    "
+                  ></mat-icon>
+                </div>
+                <div class="flex flex-col ml-4">
+                  <div
+                    class="text-base text-secondary-color font-medium leading-6"
+                  >
+                    {{ t("totalGiving") }}
+                  </div>
+                  <div class="text-lg text-dark-color font-bold">
+                    ${{ totalGiving }}M
+                  </div>
+                </div>
+              </fuse-card>
+            </div>
+            <div class="flex-shrink-0 sm:w-auto">
+              <fuse-card
+                class="flex items-center h-5-sm w-full sm:p-3 md:p-6 lg:p-6 filter-info bg-white"
+              >
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-xl bg-vivid-pink-color"
+                >
+                  <mat-icon
+                    class="text-current text-white"
+                    [svgIcon]="'feather:fa-pro-regular-award'"
+                  ></mat-icon>
+                </div>
+                <div class="flex flex-col ml-4">
+                  <div
+                    class="text-base text-secondary-color font-medium leading-6"
+                  >
+                    {{ t("supporter") }}
+                  </div>
+                  <div class="text-lg text-dark-color font-bold">
+                    {{ noOfYears }}
+                  </div>
+                </div>
+              </fuse-card>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto bg-white border shadow rounded-2xl overflow-hidden mt-7"
+        >
+          <div class="flex flex-row items-center justify-between pt-4 px-6">
+            <div
+              class="text-xl font-semibold tracking-tight leading-7 truncate"
+            >
+              {{ t("transactions") }}
+            </div>
+            <div class="sm:col-span-2">
+              <form [formGroup]="transactionForm">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                  <mat-select
+                    id="transactionSelectFilter"
+                    [(value)]="selectedTransactionOption"
+                    formControlName="transactionSelectFilter"
+                    (selectionChange)="onTransactionOptionSelected($event.value)"
+                  >
+                    <mat-option
+                      *ngFor="let option of transactionsOptions"
+                      [value]="option"
+                      >{{ option }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
+          <div class="grid-flow-row gap-6 w-full mt-8 sm:mt-4 px-0">
+            <div class="xl:col-span-2 flex flex-col flex-auto overflow-hidden">
+              <div class="overflow-x-auto">
+                <table
+                  class="w-full bg-transparent border-t-md"
+                  matSort
+                  mat-table
+                  [dataSource]="recentTransactionsDataSource"
+                  matSort
+                  #recentTransactionsTable
+                >
+                  <!-- Mobile View -->
+                  <ng-container *ngIf="isMobileView">
+                    <ng-container matColumnDef="combinedData">
+                      <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="px-7 py-4"
+                      >
+                        <div class="flex flex-auto flex-col gap-1">
+                          <div
+                            class="flex flex-row justify-between items-center"
+                          >
+                            <div class="text-secondary-color text-base">
+                              {{ transaction.date }}
+                            </div>
+                            <div
+                              class="text-dark-color font-medium text-right text-base"
+                            >
+                              {{ transaction.amount | currency : "USD" }}
+                            </div>
+                          </div>
+                          <div class="flex flex-row">
+                            <div class="text-dark-color font-medium text-lg">
+                              {{ transaction.program }}
+                            </div>
+                          </div>
+                          <div
+                            class="flex flex-row justify-between items-center"
+                          >
+                            <div
+                              class="text-secondary-color text-base"
+                              *ngIf="transaction.taxReceipt"
+                            >
+                              {{ transaction.taxReceipt }}
+                            </div>
+                            <div
+                              class="text-right"
+                              *ngIf="transaction.taxReceipt"
+                            >
+                              <mat-icon
+                                class="text-base min-wh-16 text-dark-color"
+                                [matTooltip]="
+                                  globalMessage.tooltipDownloadTaxReceipt
+                                "
+                                [svgIcon]="'feather:fa-pro-tax-receipt'"
+                              ></mat-icon>
+                            </div>
+                            <div
+                              class="text-secondary-color text-base"
+                              *ngIf="!transaction.taxReceipt"
+                              [matTooltip]="globalMessage.tooltipNotReceipted"
+                            >
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </ng-container>
+                    <!-- Define the row with the specified column -->
+                    <tr
+                      class="order-row h-14"
+                      mat-row
+                      *matRowDef="let transaction; columns: ['combinedData']"
+                    ></tr>
+                  </ng-container>
+
+                  <!-- Desktop View -->
+                  <ng-container *ngIf="!isMobileView; else">
+                    <!-- Date -->
+                    <ng-container matColumnDef="date">
+                      <th
+                        class="text-lg font-semibold leading-6"
+                        mat-header-cell
+                        mat-sort-header
+                        *matHeaderCellDef
+                        matSortDisableClear
+                      >
+                        {{ t("transactionsTableHeading.date") }}
+                      </th>
+                      <td mat-cell *matCellDef="let transaction">
+                        <span class="pr-6 whitespace-nowrap">
+                          {{ transaction.date }}
+                        </span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Amount -->
+                    <ng-container matColumnDef="amount">
+                      <th
+                        class="text-lg font-semibold leading-6"
+                        mat-header-cell
+                        mat-sort-header
+                        *matHeaderCellDef
+                        matSortDisableClear
+                      >
+                        {{ t("transactionsTableHeading.amount") }}
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="text-right"
+                      >
+                        <span class="pr-6 whitespace-nowrap">
+                          {{ transaction.amount | currency : "USD" }}
+                        </span>
+                      </td>
+                    </ng-container>
+                    <!-- Program (assuming it's equivalent to the program) -->
+                    <ng-container matColumnDef="program">
+                      <th
+                        class="text-lg font-semibold leading-6 hidden lg:table-cell program-column-width"
+                        mat-header-cell
+                        mat-sort-header
+                        *matHeaderCellDef
+                        matSortDisableClear
+                      >
+                        {{ t("transactionsTableHeading.program") }}
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="hidden lg:table-cell program-column-width"
+                      >
+                        <span class="pr-6 whitespace-nowrap">
+                          {{ transaction.program }}
+                        </span>
+                      </td>
+                    </ng-container>
+                    <!-- Tax Receipt -->
+                    <ng-container matColumnDef="taxReceipt">
+                      <th
+                        class="text-lg font-semibold leading-6"
+                        mat-header-cell
+                        mat-sort-header
+                        *matHeaderCellDef
+                        matSortDisableClear
+                      >
+                        {{ t("transactionsTableHeading.taxReceipt") }}
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="text-right align-middle"
+                      >
+                        <div
+                          class="flex justify-between items-center"
+                          *ngIf="transaction.taxReceipt"
+                        >
+                          <span class="pr-4 whitespace-nowrap">
+                            {{ transaction.taxReceipt }}
+                          </span>
+                          <mat-icon
+                            class="text-base min-wh-16 text-secondary"
+                            [matTooltip]="
+                              globalMessage.tooltipDownloadTaxReceipt
+                            "
+                            [svgIcon]="'feather:fa-pro-tax-receipt'"
+                          ></mat-icon>
+                        </div>
+                        <div
+                          *ngIf="!transaction.taxReceipt"
+                          class="pr-6 whitespace-nowrap text-left"
+                        >
+                          <span
+                            [matTooltip]="globalMessage.tooltipNotReceipted"
+                          >
+                            *
+                          </span>
+                        </div>
+                      </td>
+                    </ng-container>
+                  </ng-container>
+
+                  <!-- Desktop View -->
+                  <ng-container *ngIf="!isMobileView">
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="recentTransactionsTableColumns"
+                    ></tr>
+                    <tr
+                      class="order-row h-14"
+                      mat-row
+                      *matRowDef="
+                        let transaction;
+                        columns: recentTransactionsTableColumns
+                      "
+                    ></tr>
+                  </ng-container>
+                  <tr
+                    class="h-16 border-0"
+                    mat-footer-row
+                    *matFooterRowDef="['recentOrdersTableFooter']"
+                  ></tr>
+                  <!-- Footer -->
+                  <ng-container matColumnDef="recentOrdersTableFooter">
+                    <td
+                      class="py-6 px-4"
+                      mat-footer-cell
+                      *matFooterCellDef
+                      colspan="6"
+                    >
+                      <span
+                        ><span class="text-red-600 mr-1">*</span
+                        >{{ t("transactionTableFooterText") }}</span
+                      >
+                    </td>
+                  </ng-container>
+                </table>
+              </div>
+            </div>
+            <div class="paginator-container">
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #notFound>
+      <not-found
+        [notFoundDescription]="t('notFoundTransactionDescription')"
+        [notFoundSubDescription]="t('notFoundTransactionSubDescription')"
+        [noHistoryFound]="t('noHistoryFound')"
+        [notFoundGif]="assetKeys.notFoundTransactionGif"
+        [strokedButton]="t('monthlyDonation')"
+        [flatButton]="t('oneTimeDonation')"
+      ></not-found>
+    </ng-template>
+  </div>
+</div>

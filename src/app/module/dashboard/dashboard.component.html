@@ -1,0 +1,333 @@
+<div class="flex flex-col flex-auto w-full events-layout" *transloco="let t">
+  <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+    <div class="flex items-center justify-between w-full">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight leading-8" aria-label="{{ t('welcomeBack') }}, {{firstName}}!">
+          {{ t("welcomeBack") }}, {{ profileDetails?.nickname ? profileDetails?.nickname : profileDetails?.first_name }}!
+        </h1>
+        <div class="font-medium tracking-tight text-dark-color mt-2" aria-label="{{ t('welcomeBackDescription') }}">
+          {{ t("welcomeBackDescription") }}
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-container overflow-x-auto">
+      <div class="flex items-center w-full mt-6 gap-x-4 data-stats sm:flex-nowrap mb-2">
+        <div class="flex-shrink-0 w-full sm:w-auto">
+          <fuse-card class="flex items-center flex-col min-h-24 w-52 px-4 py-2.5 profile-redirect">
+            <div class="flex items-center w-full mb-1 ml-1 flex-auto">
+              <img class="w-9 h-9 mr-3.5 rounded-full" src="{{(profileDetails?.picture)?(profileDetails?.picture) : (assetKeys.defaultImage) }}"
+                alt="{{name}}" />
+              <div class="flex flex-col">
+                <div class="text-sm font-semibold leading-tight text-white">
+                  {{ profileDetails?.first_name }} {{ profileDetails?.last_name }}
+                </div>
+                <div class="text-xs text-white">ID {{profileDetails?.lookupId}}</div>
+              </div>
+            </div>
+            <div class="w-full mt-1">
+              <button class="fuse-mat-button-small w-full rounded-lg h-6 text-sm view-profile" mat-stroked-button
+                [routerLink]="['/account']" aria-label="{{ t('viewYourProfile') }}">
+                {{ t("viewYourProfile") }}
+              </button>
+            </div>
+          </fuse-card>
+        </div>
+        <div class="flex-shrink-0 w-full sm:w-auto">
+          <fuse-card class="flex items-center py-6 px-5 min-h-24 filter-info">
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-violet-color">
+              <mat-icon class="text-current text-white"
+                [svgIcon]="'feather:fa-pro-regular-hand-holding-circle-dollar'"></mat-icon>
+            </div>
+            <div class="flex flex-col ml-4">
+              <div class="text-base text-secondary-color font-medium leading-6">
+                {{ t("totalGiving") }}
+              </div>
+              <div class="text-lg text-dark-color font-bold">
+                ${{ transactionMockData.totalGiving }}
+              </div>
+            </div>
+          </fuse-card>
+        </div>
+        <div class="flex-shrink-0 w-full sm:w-auto">
+          <fuse-card class="flex items-center py-6 px-5 min-h-24 filter-info">
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-lion-color">
+              <mat-icon class="text-current text-white"
+                [svgIcon]="'feather:fa-pro-regular-money-bill-transfer'"></mat-icon>
+            </div>
+            <div class="flex flex-col ml-4">
+              <div class="text-base text-secondary-color font-medium leading-6">
+                {{ t("fundraised") }}
+              </div>
+              <div class="text-lg text-dark-color font-bold">
+                ${{ transactionMockData.fundraised }}
+              </div>
+            </div>
+          </fuse-card>
+        </div>
+        <div class="flex-shrink-0 w-full sm:w-auto">
+          <fuse-card class="flex items-center py-6 px-5 min-h-24 filter-info">
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-color">
+              <mat-icon class="text-current text-white" [svgIcon]="'feather:fa-pro-regular-award'"></mat-icon>
+            </div>
+            <div class="flex flex-col ml-4">
+              <div class="text-base text-secondary-color font-medium leading-6">
+                {{ t("supporter") }}
+              </div>
+              <div class="text-lg text-dark-color font-bold">
+                {{ transactionMockData.supporter }}
+              </div>
+            </div>
+          </fuse-card>
+        </div>
+        
+        <div class="flex-shrink-0 w-full sm:w-auto">
+          <fuse-card class="flex items-center py-6 px-5 min-h-24 filter-info">
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-orange-color">
+              <mat-icon class="text-current text-white"
+                [svgIcon]="'feather:fa-pro-regular-user-group-simple'"></mat-icon>
+            </div>
+            <div class="flex flex-col ml-4">
+              <div class="text-base text-secondary-color font-medium leading-6">
+                {{ t("noofevents") }}
+              </div>
+              <div class="text-lg text-dark-color font-bold">
+                {{ transactionMockData.noofevents }}
+              </div>
+            </div>
+          </fuse-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+      <div class="w-full grid-flow-row">
+        <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-6 sm:mt-3">
+          <div class="lg:col-span-1 flex flex-col" [routerLink]="'/my-giving'">
+            <div class="flex flex-row justify-between items-center gap-3">
+              <h2 class="text-xl font-bold" aria-label="{{ t('recentTransactions') }}">
+                {{t('recentTransactions')}}
+              </h2>
+              <a href="/my-giving" class="text-primary font-medium" aria-label="{{ t('viewAll') }}">
+                  {{ t('viewAll') }}
+              </a>
+            </div>
+
+          <div class="overflow-hidden">
+            <div class="container grid gap-3 mx-auto py-2">
+              <div class="grid gap-4" *ngFor="let transactionhistory of recentTransactionsDataSource">
+                <div
+                  class="flex flex-row justify-between items-center py-2 px-4 shadow w-full rounded-2xl  rounded-md border">
+
+
+                  <div class="basis-1">
+                    <mat-icon class="text-base text-secondary-color custom-transfer-icon"
+                      [svgIcon]="'feather:fa-pro-regular-money-bill-transfer'"></mat-icon>
+                  </div>
+                  <div class="basis-3/4 ml-4">
+                    <div class="mr-2 text-lg font-medium">
+                      {{ transactionhistory.program }}
+                    </div>
+                    <div class="text-gray-500">
+                      {{ transactionhistory.date }}
+                    </div>
+
+                  </div>
+                  <div class="basis-1/5 flex justify-evenly items-center">
+                    <span class="font-bold">{{
+                      transactionhistory.amount | currency : "USD"
+                      }}</span>
+                      <mat-icon *ngIf="transactionhistory.taxReceipt" class="text-base min-wh-16 text-secondary-color"
+                      [svgIcon]="'feather:fa-pro-tax-receipt'"></mat-icon>
+                  </div>
+
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1 flex flex-col" [routerLink]="'/events'">
+        <div class="flex flex-row justify-between items-center gap-3">
+          <h2 class="text-xl font-bold" aria-label="{{ t('myEvents') }}">
+            {{ t("myEvents") }}
+          </h2>
+          <a
+            href="/events"
+            class="text-primary font-medium"
+            aria-label="{{ t('viewAll') }}"
+          >
+            {{ t("viewAll") }}
+          </a>
+        </div>
+        <div class="grid w-full">
+          <fuse-card
+            *ngFor="let upcomingevents of upcomingEvents"
+            class="flex flex-col md:flex-row w-full filter-shopping mt-2"
+          >
+            <div
+              class="flex-0 w-full photo-resolution hidden sm:hidden md:block"
+              aria-hidden="true"
+            >
+              <img
+                class="w-full h-full object-cover"
+                src="{{ upcomingevents.imageUrl }}"
+                alt="Event image"
+              />
+            </div>
+            <div class="flex flex-col flex-auto ml-6">
+              <div class="flex flex-col event-name">
+                <div
+                  class="mt-4 text-xl font-bold leading-6 flex items-center justify-between mr-5"
+                >
+                  {{ upcomingevents.eventName }}
+                  <mat-icon
+                    class="text-secondary-color upsquare-icon"
+                    [svgIcon]="'feather:fa-up-right-from-square'"
+                  ></mat-icon>
+                </div>
+                <a
+                  class="mt-0.5 text-medium text-blue-color line-clamp-2"
+                  href="{{ upcomingevents.eventUrl }}"
+                  >{{ upcomingevents.pageName }}</a
+                >
+                <div
+                  class="flex items-center leading-5 text-md text-secondary"
+                  aria-label="{{ upcomingevents.teamName }}"
+                >
+                  <mat-icon
+                    class="icon-size-5 text-hint"
+                    [svgIcon]="'feather:team-icon'"
+                  ></mat-icon>
+                  <div class="ml-1.5">{{ upcomingevents.teamName }}</div>
+                </div>
+              </div>
+              <div class="flex flex-col w-full">
+                <div class="mt-0.5 line-clamp-2 text-dark-color">
+                  <span class="font-bold"
+                    >${{ upcomingevents.amountRaised }}</span
+                  >
+                  {{ t("ofYour") }}
+                  <span class="font-bold"
+                    >${{ upcomingevents.goalAmount }}</span
+                  >
+                  {{ t("goalRaised") }}
+                </div>
+                <div class="relative h-0.5 mb-6">
+                  <div class="z-10 absolute inset-x-0 h-6" [matTooltip]="upcomingevents.amountRaised / upcomingevents.goalAmount | percent" [matTooltipPosition]="'above'" [matTooltipClass]="'-mb-0.5'"></div>
+                  <mat-progress-bar mode="determinate" class="h-0.5 mt-2" [value]="(100 * upcomingevents.amountRaised) / upcomingevents.goalAmount" aria-valuemin="0" [attr.aria-valuenow]="(100 * upcomingevents.amountRaised) / upcomingevents.goalAmount" aria-valuemax="100"></mat-progress-bar>
+              </div>
+              </div>
+            </div>
+          </fuse-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="flex flex-wrap justify-center w-full max-w-screen-xl mx-auto py-6 px-10 md:p-8">
+    <div class="max-w-screen-xl mx-auto rounded-lg overflow-hidden flex flex-col lg:flex-row">
+      <!-- Image Section -->
+      <div class="w-full lg:w-1/2 flex items-center">
+        <img src="{{assetKeys.dashboardBanner}}" alt="placeHolderImage" class="w-full object-cover br-lb-2 dashboard-banner">
+      </div>
+      
+      <!-- Text Content Section -->
+      <fuse-card class="w-full lg:w-1/2 p-8 profile-redirect text-white flex flex-col justify-center">
+        <div class="m-4 ">
+        <p class="text-lg uppercase tracking-wide">{{t('yourTimeToDream')}}</p>
+        <h1 class="text-60px my-4 million-text">{{t('million')}}</h1>
+        <h2 class="text-3xl font-bold">{{t('princeEdward')}}</h2>
+        <p class="my-4">{{t('prize')}}</p>
+        <div class="flex space-x-4 mt-6">
+          <a href="#" class="px-6 py-3 bg-white font-semibold text-dark-color rounded-full">{{t('buyTickets')}}</a>
+          <a href="#" class="px-6 py-3 border border-white text-white font-semibold rounded-full">{{t('learnMore')}}</a>
+        </div>
+        <!-- Navigation Dots -->
+        
+        <div class="flex items-center space-x-2 mt-8">
+          <button class="text-30px text-white"><</button>
+          <button class="w-3 h-3 bg-white rounded-full"></button>
+          <button class="w-3 h-3 bg-white rounded-full"></button>
+          <button class="w-3 h-3 bg-white rounded-full"></button>
+          <button class="w-3 h-3 bg-white rounded-full"></button>
+          <button class="w-3 h-3 bg-white rounded-full"></button>
+          <button class="text-30px text-white">></button>
+        </div>
+        
+      </div>
+      </fuse-card>
+    </div></div>
+    <div class="font-bold text-xl p-6 md:p-8">{{t('fundraising')}}</div>
+      <div class="flex items-center ml-6 w-full noevents-cards">
+          <fuse-card class="flex ml-4 flex-col max-w-80 w-full filter-listing noevents-suggestion" *ngFor="let upcomingeventssuggestion of upcomingEventsSuggestion;">
+              <img class="object-cover sm:block" src="{{assetKeys.fundraisedImage}}" alt="fundraisedImage">
+              <div class="m-0.5 mt-4">
+                  <div class="flex justify-between">
+                      <div class="flex flex-col">
+                          <div class="text-2xl leading-tight font-semibold">{{upcomingeventssuggestion.eventName}}</div>
+                          <div class="secondary-color leading-tight mt-1 text-md">{{upcomingeventssuggestion.startDate | date : longDate}}</div>
+                      </div>
+                  </div>
+                  <div class="w-6 h-1 my-4 border-t-2 border-color"></div>
+                  <div class="ml-0.5 -mx-3">
+                      <a class="px-3 mr-4 more-info-button" mat-button [routerLink]="['./']">{{t('moreInfo')}}</a>
+                      <a class="px-3 donate-button" mat-button [routerLink]="['./']">{{t('donate')}}</a>
+                  </div>
+              </div>
+          </fuse-card>
+      </div>
+      <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full grid-flow-row">
+          <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-6 sm:mt-3">
+            <div class="lg:col-span-1 flex flex-col" [routerLink]="'/'">
+              <div class="flex flex-row justify-between items-center gap-3">
+                <h2 class="text-xl font-bold" aria-label="{{ t('howPmcfHelps') }}">
+                  {{ t('howPmcfHelps') }}
+                </h2>
+                <a href="/" class="text-primary font-medium" aria-label="{{ t('learnMore') }}">
+                  {{ t('learnMore') }}
+                </a>
+              </div>
+              <div *ngIf="!isVideoPlaying" class="relative w-full pb-9/16" (click)="playVideo()">
+                <img src="{{assetKeys.placeHolderImage}}" alt="Video Thumbnail" class="absolute top-0 left-0 w-full object-cover cursor-pointer">
+                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <button class="bg-white text-black py-2 px-4 rounded-full text-lg">Play</button>
+                </div>
+              </div>
+              
+              <div *ngIf="isVideoPlaying" class="relative w-full pb-9/16">
+                <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(assetKeys.dashboardVideo)" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              
+            </div>
+            <div class="lg:col-span-1 flex flex-col" [routerLink]="'/'">
+              <div class="flex flex-row justify-between items-center gap-3">
+              <h2 class="text-xl font-bold " aria-label="{{ t('waysToGive') }}">
+                {{ t('waysToGive') }}
+              </h2>
+              <a href="/" class="text-primary font-medium" aria-label="{{ t('viewAll') }}">
+                {{ t('viewAll') }}
+              </a>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+                <fuse-card class="flex ml-4 flex-col max-w-80 w-full filter-listing noevents-suggestion">
+                  <img class="object-cover sm:block" src="{{assetKeys.fundraisedImage}}" alt="fundraisedImage">
+                </fuse-card>
+                <fuse-card class="flex ml-4 flex-col max-w-80 w-full filter-listing noevents-suggestion">
+                  <img class="object-cover sm:block" src="{{assetKeys.fundraisedImage}}" alt="fundraisedImage">
+                </fuse-card>
+                <fuse-card class="flex ml-4 flex-col max-w-80 w-full filter-listing noevents-suggestion">
+                  <img class="object-cover sm:block" src="{{assetKeys.fundraisedImage}}" alt="fundraisedImage">
+                </fuse-card>
+                <fuse-card class="flex ml-4 flex-col max-w-80 w-full filter-listing noevents-suggestion">
+                  <img class="object-cover sm:block" src="{{assetKeys.fundraisedImage}}" alt="fundraisedImage">
+                </fuse-card>
+              </div>
+            </div>
+          </div></div></div>
+      
+      
+  </div>
+    <app-footer></app-footer>

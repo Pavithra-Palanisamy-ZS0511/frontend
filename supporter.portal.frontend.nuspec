@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>supporter.portal.frontend</id>
+    <version>1.0.0</version>
+    <authors>A.K.A. Raisin</authors>
+    <owners>A.K.A. Raisin</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>supporter portal frontend angular deployment package</description>
+    <releaseNotes></releaseNotes>
+  </metadata>
+  <files>
+    <file src="./dist/fuse/" target="" />
+  </files>
+</package>

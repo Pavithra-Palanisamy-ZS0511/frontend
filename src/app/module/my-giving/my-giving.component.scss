@@ -1,0 +1,32 @@
+.drawer-content-wrapper {
+  background-color: #f9fafb !important;
+  border-left: 1px solid #dfe4ea;
+  min-height: 100vh;
+}
+.mat-drawer-side {
+  border-right-width: inherit !important;
+  border-right-style: solid;
+}
+
+.wh-32 {
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+@media screen and (max-width: 960px) {
+  .text-2xl-md {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mat-drawer-inner-container {
+    width: 100dvw !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .w-348 {
+    width: 348px !important;
+  }
+}

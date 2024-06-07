@@ -1,0 +1,206 @@
+<div *transloco="let t">
+  <div
+    class="w-full"
+    role="form"
+    aria-labelledby="{{ t('contactDetailsLabel') }}"
+  >
+    <div class="w-full">
+      <h2 id="{{ t('contactDetailsLabel') }}" class="text-dark-color mt-0">
+        {{ t("contactDetailsDescription") }}
+      </h2>
+      <div class="sm:col-span-3 mt-5 mb-5">
+        <fuse-alert [appearance]="'outline'" [type]="'info'" [showIcon]="false">
+          <div class="flex items-center">
+            <mat-icon
+              [svgIcon]="'feather:fa-pro-outline-info'"
+              class="pt-1"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="ml-2 font-normal alert-text-color">
+              {{ t("contactDetailsAlertText") }}
+            </span>
+          </div>
+        </fuse-alert>
+      </div>
+    </div>
+    <div
+      class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto overflow-hidden mt-2"
+    >
+      <div class="text-xl font-bold tracking-tight leading-7 truncate mt-4">
+        {{ t("contactEmailAddress") }}
+      </div>
+
+      <form [formGroup]="updateContactEmailForm">
+        <div class="grid sm:grid-cols-2 items-center gap-6 w-full mt-2">
+          <div class="sm:col-span-1">
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >
+              <mat-label class="sr-only" for="email">{{
+                t("emailInputLabel")
+              }}</mat-label>
+              <input formControlName="email" matInput id="email" readonly />
+              <mat-icon matSuffix class="text-green-600" aria-hidden="true" *ngIf="false"
+                >done</mat-icon
+              >
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-1" *ngIf="false">
+            <button
+              class="w-full bg-primary-500 text-white py-3 px-4 rounded-full"
+              type="button"
+              aria-label="{{ t('updateContactEmail') }}"
+              [disabled]="isDisabled"
+            >
+              {{ t("updateContactEmail") }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Divider -->
+      <div class="my-10 border-t"></div>
+
+      <div class="text-xl font-bold tracking-tight leading-7 truncate">
+        {{ t("phoneNumber") }}
+      </div>
+
+      <form [formGroup]="updatePhoneNumberForm">
+        <div class="grid sm:grid-cols-2 items-center gap-6 w-full mt-2">
+          <div class="sm:col-span-1">
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >
+              <mat-label class="sr-only" for="phoneNumber">{{
+                t("phoneInputLabel")
+              }}</mat-label>
+              <input
+                formControlName="phoneNumber"
+                matInput
+                id="phoneNumber"
+                readonly
+              />
+              <mat-icon matSuffix class="text-green-600" aria-hidden="true" *ngIf="false"
+                >done</mat-icon
+              >
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-1" *ngIf="false">
+            <button
+              class="w-full bg-primary-500 text-white py-3 px-4 rounded-full"
+              type="button"
+              aria-label="{{ t('updatePhoneNumber') }}"
+              [disabled]="isDisabled"
+            >
+              {{ t("updatePhoneNumber") }}
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="my-10 border-t"></div>
+
+      <div class="text-xl font-bold tracking-tight leading-7 truncate">
+        {{ t("mailingAddress") }}
+      </div>
+
+      <form [formGroup]="updateMailingAddressForm">
+        <div class="grid sm:grid-cols-4 items-center gap-6 w-full mt-8">
+          <div class="sm:col-span-4">
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >
+              <mat-label class="text-lg" for="addressInputLine1">{{
+                t("streetLine")
+              }}</mat-label>
+              <input
+                formControlName="addressInputLine1"
+                matInput
+                id="addressInputLine1"
+                readonly
+              />
+            </mat-form-field>
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >             
+              <mat-label class="sr-only" for="addressInputLine2">{{
+                t("addressLine2Label")
+              }}</mat-label>
+              <input
+                formControlName="addressInputLine2"
+                matInput
+                id="addressInputLine2"
+                placeholder="{{ t('addressLine2Placeholder') }}"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="sm:col-span-2">
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >
+              <mat-label class="text-lg" for="city">{{
+                t("contactDetailsFormLabel.city")
+              }}</mat-label>
+              <input formControlName="city" matInput id="city" readonly />
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-2">
+            <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+              <mat-label class="text-lg" for="province">{{
+                t("contactDetailsFormLabel.province")
+              }}</mat-label>
+              <mat-select [formControlName]="'province'" id="province">
+                <mat-option
+                  *ngFor="let province of provinceOptions"
+                  [value]="province"
+                  >{{ province }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-2">
+            <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+              <mat-label class="text-lg" for="country">{{
+                t("contactDetailsFormLabel.country")
+              }}</mat-label>
+              <mat-select formControlName="country" id="country">
+                <mat-option
+                  *ngFor="let country of countryOptions"
+                  [value]="country"
+                  >{{ country }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-2">
+            <mat-form-field
+              class="w-full"
+              [class.mat-form-field-disabled]="isDisabled"
+            >
+              <mat-label class="text-lg" for="zipCode"
+                >{{ t("contactDetailsFormLabel.zipCode") }}
+              </mat-label>
+              <input formControlName="zipCode" matInput id="zipCode" readonly />
+            </mat-form-field>
+          </div>
+          <div class="sm:col-span-2" *ngIf="false">
+            <button
+              class="w-full bg-primary-500 text-white py-3 px-4 rounded-full"
+              type="button"
+              aria-label="{{ t('updateMailingAddress') }}"
+              [disabled]="isDisabled"
+            >
+              {{ t("updateMailingAddress") }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

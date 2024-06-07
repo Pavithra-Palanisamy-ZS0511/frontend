@@ -1,0 +1,27 @@
+.header-wrapper {
+  height: 100px;
+  padding: 0px 40px;
+  border-bottom: 1px solid #dfe4ea;
+  background: linear-gradient(59.04deg, #0f2c6e -0.04%, #3d6cb5 100%);
+}
+
+.text-custom-md {
+  font-size: 1.125rem !important;
+  line-height: 1.625rem;
+}
+
+@media (max-width: 960px) {
+  .md-hidden {
+    display: none !important;
+  }
+  .text-custom-sm {
+    font-size: 0.875rem !important;
+    line-height: 1.313rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .xs-mr-3 {
+    margin-right: 0.75rem !important;
+  }
+}

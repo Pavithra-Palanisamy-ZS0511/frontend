@@ -1,0 +1,236 @@
+<div class="flex flex-col flex-auto w-full events-layout" *transloco="let t">
+
+    <!-- Events section -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8" *ngIf="!noEvents">
+
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <div class="text-3xl font-bold tracking-tight leading-8"> {{t('eventsDescription')}}</div>
+                <div class="font-medium tracking-tight text-dark-color mt-2">{{t('eventsSubDescription')}}</div>
+            </div>
+        </div>
+        
+        <!-- Upcoming Events -->
+        <mat-accordion class="w-full mt-3">
+            <ng-container>
+                <mat-expansion-panel hideToggle [expanded]="true">
+                    <mat-expansion-panel-header [collapsedHeight]="'56px'">
+                        <mat-panel-title class="text-xl font-bold ">{{t('upcomingEvents')}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+            
+                    <app-loader *ngIf="isLoading"></app-loader>
+                    <fuse-card *ngFor="let upcomingevents of upcomingEvents;" class="flex flex-col md:flex-row w-full filter-shopping">
+                        <div class="flex-0 w-full photo-resolution hidden sm:hidden md:block" aria-hidden="true">
+                            <img class="w-full h-full object-cover" src="{{upcomingevents.imageUrl}}" alt="Card cover image">
+                        </div>
+                        <div class="flex flex-col flex-auto">
+
+                            <div class="flex flex-col event-name  ml-6">
+
+                                <div class="mt-4 text-xl font-bold leading-6 flex items-center justify-between mr-5">
+                                    {{upcomingevents.eventName}}
+                                    <mat-icon class="text-secondary-color upsquare-icon" [svgIcon]="'feather:fa-up-right-from-square'"></mat-icon>
+                                </div>
+                                <a class="mt-0.5 text-medium text-blue-color line-clamp-2" href="{{upcomingevents.eventUrl}}">{{upcomingevents.pageName}}</a>
+                                <div class="w-12 h-1 my-4 border-t-2" *ngIf="upcomingevents.teamName"></div>
+                                <div class="flex items-center leading-5 text-md text-secondary" *ngIf="upcomingevents.teamName" aria-label="Team Name">
+                                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:team-icon'"></mat-icon>
+                                    <div class="ml-1.5">{{upcomingevents.teamName}}</div>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="mt-0.5 line-clamp-2 text-dark-color mr-0 ml-6"><span class="font-bold">${{upcomingevents.amountRaised}}</span> {{t('ofYour')}} <span class="font-bold">${{upcomingevents.goalAmount}}</span> {{t('goalRaised')}} </div>
+                                <div class="relative h-0.5 mb-6">
+                                    <div class="z-10 absolute inset-x-0 h-6" [matTooltip]="upcomingevents.amountRaised / upcomingevents.goalAmount | percent" [matTooltipPosition]="'above'" [matTooltipClass]="'-mb-0.5'"></div>
+                                    <mat-progress-bar mode="determinate" class="h-0.5 mt-2" [value]="(100 * upcomingevents.amountRaised) / upcomingevents.goalAmount" aria-valuemin="0" [attr.aria-valuenow]="(100 * upcomingevents.amountRaised) / upcomingevents.goalAmount" aria-valuemax="100"></mat-progress-bar>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end w-full px-3 pb-2">
+                                <button mat-stroked-button [routerLink]="upcomingevents.eventUrl" type="button" aria-label="Participant centre">{{t('participantCentre')}}</button>
+                                <button class="ml-4" mat-flat-button type="button" aria-label="Live page" class="ml-4 bg-primary-500 text-white py-2 px-4 rounded-full flex flex-row-reverse gap-2">{{t('livePage')}}<mat-icon class="ml-1.5 icon-size-5 arrow-icon" [svgIcon]="'heroicons_solid:arrow-small-right'"></mat-icon></button>
+                            </div>
+
+                        </div>
+                    </fuse-card>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+        <!-- Behind the scenes current year-->
+        <mat-accordion class="w-full mt-3">
+            <ng-container>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header [collapsedHeight]="'56px'">
+                        <mat-panel-title class="text-xl font-bold ">{{t('behindTheScenes')}} {{currentYear}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+            
+                    <app-loader *ngIf="isLoading"></app-loader>
+                    <fuse-card *ngFor="let currentEvents of currentYearEvents;" class="flex flex-col md:flex-row w-full filter-shopping">
+                        <div class="flex-0 w-full photo-resolution hidden sm:hidden md:block" aria-hidden="true">
+                            <img class="w-full h-full object-cover" src="{{currentEvents.imageUrl}}" alt="Card cover image">
+                        </div>
+                        <div class="flex flex-col flex-auto">
+
+                            <div class="flex flex-col event-name  ml-6">
+
+                                <div class="mt-4 text-xl font-bold leading-6 flex items-center justify-between mr-5">
+                                    {{currentEvents.eventName}}
+                                    <mat-icon class="text-secondary-color upsquare-icon" [svgIcon]="'feather:fa-up-right-from-square'"></mat-icon>
+                                </div>
+                                <a class="mt-0.5 text-medium text-blue-color line-clamp-2" href="{{currentEvents.eventUrl}}">{{currentEvents.pageName}}</a>
+                                <div class="w-12 h-1 my-4 border-t-2" *ngIf="currentEvents.teamName"></div>
+                                <div class="flex items-center leading-5 text-md text-secondary" *ngIf="currentEvents.teamName" aria-label="Team Name">
+                                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:team-icon'"></mat-icon>
+                                    <div class="ml-1.5">{{currentEvents.teamName}}</div>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="mt-0.5 line-clamp-2 text-dark-color mr-0 ml-6"><span class="font-bold">${{currentEvents.amountRaised}}</span> {{t('ofYour')}} <span class="font-bold">${{currentEvents.goalAmount}}</span> {{t('goalRaised')}} </div>
+                                <div class="relative h-0.5 mb-6">
+                                    <div class="z-10 absolute inset-x-0 h-6" [matTooltip]="currentEvents.amountRaised / currentEvents.goalAmount | percent" [matTooltipPosition]="'above'" [matTooltipClass]="'-mb-0.5'"></div>
+                                    <mat-progress-bar mode="determinate" class="h-0.5 mt-2" [value]="(100 * currentEvents.amountRaised) / currentEvents.goalAmount" aria-valuemin="0" [attr.aria-valuenow]="(100 * currentEvents.amountRaised) / currentEvents.goalAmount" aria-valuemax="100"></mat-progress-bar>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end w-full px-3 pb-2">
+                                <button mat-stroked-button [routerLink]="currentEvents.eventUrl" type="button" aria-label="Participant centre">{{t('participantCentre')}}</button>
+                                <button class="ml-4" mat-flat-button type="button" aria-label="Live page" class="ml-4 bg-primary-500 text-white py-2 px-4 rounded-full flex flex-row-reverse gap-2">{{t('livePage')}}<mat-icon class="ml-1.5 icon-size-5 arrow-icon" [svgIcon]="'heroicons_solid:arrow-small-right'"></mat-icon></button>
+                            </div>
+
+                        </div>
+                    </fuse-card>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+        
+        <!-- Past Events -->
+        <div class="w-full h-1 my-6 border-t-2"></div>
+        <mat-accordion class="w-full" *ngIf="showPastEvents">
+            <ng-container>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header [collapsedHeight]="'56px'">
+                        <mat-panel-title class="text-xl font-bold ">{{t('pastEvents')}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <fuse-card *ngFor="let pastEvents of pastEvents;" class="flex flex-col md:flex-row w-full filter-shopping">
+                        <div class="flex-0 w-full photo-resolution hidden sm:hidden md:block" aria-hidden="true">
+                            <img class="w-full h-full object-cover" src="{{pastEvents.imageUrl}}" alt="Card cover image">
+                        </div>
+                        <div class="flex flex-col flex-auto ml-6">
+
+                            <div class="flex flex-col event-name">
+
+                                <div class="mt-4 text-xl font-bold leading-6 flex items-center justify-between mr-5">
+                                    {{pastEvents.eventName}}
+                                    <mat-icon class="text-secondary-color upsquare-icon" [svgIcon]="'feather:fa-up-right-from-square'"></mat-icon>
+                                </div>
+                                <a class="mt-0.5 text-medium text-blue-color line-clamp-2" href="{{pastEvents.eventUrl}}">{{pastEvents.pageName}}</a>
+                                <div class="w-12 h-1 my-6 border-t-2" *ngIf="pastEvents.teamName"></div>
+                                <div class="flex items-center leading-5 text-md text-secondary" *ngIf="pastEvents.teamName" aria-label="Team Name">
+                                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:team-icon'"></mat-icon>
+                                    <div class="ml-1.5">{{pastEvents.teamName}}</div>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="mt-0.5 line-clamp-2 text-dark-color"><span class="font-bold">${{pastEvents.amountRaised}}</span> {{t('ofYour')}} <span class="font-bold">${{pastEvents.goalAmount}}</span> {{t('goalRaised')}} </div>
+                                <div class="relative h-0.5 mb-6">
+                                    <div class="z-10 absolute inset-x-0 h-6" [matTooltip]="pastEvents.amountRaised / pastEvents.goalAmount | percent" [matTooltipPosition]="'above'" [matTooltipClass]="'-mb-0.5'"></div>
+                                    <mat-progress-bar mode="determinate" class="h-0.5 mt-2" [value]="(100 * pastEvents.amountRaised) / pastEvents.goalAmount" aria-valuemin="0" [attr.aria-valuenow]="(100 * pastEvents.amountRaised) / pastEvents.goalAmount" aria-valuemax="100"></mat-progress-bar>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end mr-5">
+                                <button mat-stroked-button [routerLink]="pastEvents.eventUrl" type="button" aria-label="Participant centre">{{t('participantCentre')}}</button>
+                                <button class="ml-4" mat-flat-button type="button" aria-label="Live page" class="ml-4 bg-primary-500 text-white py-2 px-4 rounded-full flex flex-row-reverse gap-2">{{t('livePage')}}<mat-icon class="ml-1.5 icon-size-5 arrow-icon" [svgIcon]="'heroicons_solid:arrow-small-right'"></mat-icon></button>
+                            </div>
+
+                        </div>
+                    </fuse-card>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+        <mat-accordion class="w-full mt-3" *ngFor="let year of getYears()">
+            <ng-container>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header [collapsedHeight]="'56px'">
+                        <mat-panel-title class="text-xl font-bold ">{{t('behindTheScenes')}} {{year}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <fuse-card *ngFor="let eventsPastYears of eventsYearWise[year];" class="flex flex-col md:flex-row w-full filter-shopping">
+                        <div class="flex-0 w-full photo-resolution hidden sm:hidden md:block" aria-hidden="true">
+                            <img class="w-full h-full object-cover" src="{{eventsPastYears.imageUrl}}" alt="Card cover image">
+                        </div>
+                        <div class="flex flex-col flex-auto ml-6">
+
+                            <div class="flex flex-col event-name">
+
+                                <div class="mt-4 text-xl font-bold leading-6 flex items-center justify-between mr-5">
+                                    {{eventsPastYears.eventName}}
+                                    <mat-icon class="text-secondary-color upsquare-icon" [svgIcon]="'feather:fa-up-right-from-square'"></mat-icon>
+                                </div>
+                                <a class="mt-0.5 text-medium text-blue-color line-clamp-2" href="{{eventsPastYears.eventUrl}}">{{eventsPastYears.pageName}}</a>
+                                <div class="w-12 h-1 my-6 border-t-2" *ngIf="eventsPastYears.teamName"></div>
+                                <div class="flex items-center leading-5 text-md text-secondary" *ngIf="eventsPastYears.teamName" aria-label="Team Name">
+                                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:team-icon'"></mat-icon>
+                                    <div class="ml-1.5">{{eventsPastYears.teamName}}</div>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="mt-0.5 line-clamp-2 text-dark-color"><span class="font-bold">${{eventsPastYears.amountRaised}}</span> {{t('ofYour')}} <span class="font-bold">${{eventsPastYears.goalAmount}}</span> {{t('goalRaised')}} </div>
+                                <div class="relative h-0.5 mb-6">
+                                    <div class="z-10 absolute inset-x-0 h-6" [matTooltip]="eventsPastYears.amountRaised / eventsPastYears.goalAmount | percent" [matTooltipPosition]="'above'" [matTooltipClass]="'-mb-0.5'"></div>
+                                    <mat-progress-bar mode="determinate" class="h-0.5 mt-2" [value]="(100 * eventsPastYears.amountRaised) / eventsPastYears.goalAmount" aria-valuemin="0" [attr.aria-valuenow]="(100 * eventsPastYears.amountRaised) / eventsPastYears.goalAmount" aria-valuemax="100"></mat-progress-bar>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end mr-5">
+                                <button mat-stroked-button [routerLink]="eventsPastYears.eventUrl" type="button" aria-label="Participant centre">{{t('participantCentre')}}</button>
+                                <button class="ml-4" mat-flat-button type="button" aria-label="Live page" class="ml-4 bg-primary-500 text-white py-2 px-4 rounded-full flex flex-row-reverse gap-2">{{t('livePage')}}<mat-icon class="ml-1.5 icon-size-5 arrow-icon" [svgIcon]="'heroicons_solid:arrow-small-right'"></mat-icon></button>
+                            </div>
+
+                        </div>
+                    </fuse-card>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+    </div>
+
+    <!-- No events section -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8" *ngIf="noEvents">
+
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <div class="text-3xl font-bold tracking-tight leading-8">{{t('eventsDescription')}}</div>
+            </div>
+        </div>
+        
+        <!-- No events content -->
+            <div class="w-full">
+                <not-found [notFoundDescription]="t('noEventsDescription')"
+                [notFoundSubDescription]="t('noEventsSubDescription')"
+                [strokedButton]="t('otherWaysToGive')"
+                [flatButton]="t('waysToGive')"
+                [noHistoryFound]="t('noEventsFound')" [notFoundGif]="assetKeys.noEvents"></not-found>
+            </div>
+        
+            <div class="w-full h-1 my-6 border-t-2"></div>
+        <!-- Upcoming events suggestions -->
+        <div class="font-bold tracking-tight leading-8">{{t('upcomingEventsInterest')}}</div>
+        <div class="flex items-center justify-between w-full noevents-cards">
+            <fuse-card class="flex flex-col max-w-80 w-full filter-listing noevents-suggestion" *ngFor="let upcomingeventssuggestion of upcomingEventsSuggestion;">
+                <img class="object-cover sm:block" src="assets/images/cards/mansion-01-320x200.jpg" alt="Card cover image">
+                <div class="m-0.5 mt-4">
+                    <div class="flex justify-between">
+                        <div class="flex flex-col">
+                            <div class="text-2xl leading-tight font-semibold">{{upcomingeventssuggestion.eventName}}</div>
+                            <div class="secondary-color leading-tight mt-1 text-md">{{upcomingeventssuggestion.startDate | date : longDate}}</div>
+                        </div>
+                    </div>
+                    <div class="w-6 h-1 my-4 border-t-2 border-color"></div>
+                    <div class="ml-0.5 -mx-3">
+                        <a class="px-3 mr-4 more-info-button" mat-button [routerLink]="['./']">{{t('moreInfo')}}</a>
+                        <a class="px-3 donate-button" mat-button [routerLink]="['./']">{{t('donate')}}</a>
+                    </div>
+                </div>
+            </fuse-card>
+        </div>
+    </div>
+</div>
